@@ -1,0 +1,11 @@
+#TODO
+all: compileme
+
+compileme: compileme.c
+	gcc compileme.c -o compileme
+
+debug: compileme.c
+	gcc -g -Wall compileme.c -o compileme
+
+clean:
+	rm -f compileme
