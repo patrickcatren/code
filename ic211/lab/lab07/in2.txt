@@ -1,0 +1,2 @@
+every 2 days start 1/7/2017 expense Ta
+every 1 days start 1/6/2017 income Dum
