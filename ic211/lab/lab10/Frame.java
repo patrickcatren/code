@@ -7,7 +7,7 @@ public class Frame extends JFrame {
   private JComboBox<Double> interestRate;
   private JTextField payoff;
   private JTextField cost;
-  private Loan A;
+  public  Loan A;
   private final Double[] units = { 3.5, 3.75, 4.0, 4.25, 4.5, 4.75, 5.0, 5.25, 5.5, 5.75, 6.0, 6.25, 6.5, 6.75, 7.0, 7.25, 7.5};
 
 
@@ -18,7 +18,10 @@ public class Frame extends JFrame {
 
   public void createLoan(){
       //create a loan
-      A = new Loan((Double.parseDouble(loanAmount.getSelectedText())), units[interestRate.getSelectedIndex()], (Double.parseDouble(monthlyPayment.getText())));
+      double AAmt = Double.parseDouble(loanAmount.getText());
+      double AUnit = (Double)interestRate.getSelectedItem();
+      double AMon = Double.parseDouble(monthlyPayment.getText());
+      A = new Loan(AAmt, AUnit, AMon);
   }
   public void calculate(){
     payoff.setText(Integer.toString(A.months()));
@@ -49,9 +52,6 @@ public class Frame extends JFrame {
     Responder r = new Responder(this);
 
     // add action listeners
-    loanAmount.addActionListener(r);
-    monthlyPayment.addActionListener(r);
-    interestRate.addActionListener(r);
     calc.addActionListener(r);
 
     // add components to frame & ready for display
