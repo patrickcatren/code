@@ -10,9 +10,10 @@ public class DrawArea extends JComponent implements Runnable {
   public DrawArea() {
     super();
     setPreferredSize(new Dimension(1200, 1200));
-    addPlankton(20);
-    addShark(5);
-    addCarp(12);
+    //addPlankton(20);
+    //addShark(5);
+    //addCarp(12);
+    addBass(12);
   }
 
   public void addPlankton(int size){
@@ -24,6 +25,12 @@ public class DrawArea extends JComponent implements Runnable {
   public void addShark(int size){
     for(int i = 0; i < size; i++){
       Shark a = new Shark(0, rand.nextInt(1200), rand);
+      fishes.add(a);
+    }
+  }
+  public void addBass(int size){
+    for(int i = 0; i < size; i++){
+      Bass a = new Bass(0, rand.nextInt(700) + 500, rand);
       fishes.add(a);
     }
   }

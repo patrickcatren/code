@@ -7,7 +7,6 @@ import java.awt.event.*;
 public abstract class Fish implements MouseListener {
     private double goalx, goaly;
     private double x, y, r, delta;
-    private double dirX, dirY;
     private Random rand;
   
     public Fish(double x, double y, Random ra) {

@@ -25,12 +25,12 @@ public class Carp extends Fish {
         this.setPlace(x, y);
         if(ifStops(goaly, goalx, x, y)){
             goalx = rand.nextInt(1200);
-            goaly = rand.nextInt(500);
+            goaly = rand.nextInt(550);
             this.setGoal(goalx, goaly);
         }
     }
     private boolean ifStops(double goaly, double goalx, double x, double y) {
-        return (x == 0) || (y == 0) || (x == 1200) || (y == 500) 
+        return (x == 0) || (y == 0) || (x == 1200) || (y == 550) 
         || (x == goalx) || (y == goaly);
     }
 }

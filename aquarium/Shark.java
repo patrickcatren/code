@@ -5,6 +5,7 @@ public class Shark extends Fish {
     public Shark(double x, double y, Random r){
         super(x, y, r);
         changeSpeed(10);
+        changeRadius(100);
         rand = r;
     }
     public void step() {
