@@ -2,6 +2,9 @@ import java.awt.geom.*;
 import java.awt.*;
 import javax.swing.*;
 import java.util.*;
+import javax.imageio.*;
+import java.awt.image.*;
+import java.io.*;
 
 public class DrawArea extends JComponent implements Runnable {
   private Random rand = new Random(System.currentTimeMillis());
@@ -10,12 +13,18 @@ public class DrawArea extends JComponent implements Runnable {
   public DrawArea() {
     super();
     setPreferredSize(new Dimension(1200, 1200));
-    //addPlankton(20);
-    //addShark(5);
-    //addCarp(12);
-    addBass(12);
+    addPlankton(0);
+    addShark(2);
+    addCarp(2);
+    addBass(2);
+    setSpeed(3);
   }
 
+  public void setSpeed(double speed){
+    for(int i = 0; i < fishes.size(); i++){
+      fishes.get(i).changeSpeed(speed);
+    }
+  }
   public void addPlankton(int size){
     for(int i = 0; i < size; i++){
       Plankton a = new Plankton(rand.nextInt(1200), 0, rand);
@@ -36,7 +45,7 @@ public class DrawArea extends JComponent implements Runnable {
   }
   public void addCarp(int size){
     for(int i = 0; i < size; i++){
-      Carp a = new Carp(0, rand.nextInt(1200), rand);
+      Carp a = new Carp(0, rand.nextInt(550), rand);
       fishes.add(a);
     }
   }
@@ -67,7 +76,14 @@ public class DrawArea extends JComponent implements Runnable {
     g2.setRenderingHint(
       RenderingHints.KEY_RENDERING,
       RenderingHints.VALUE_RENDER_QUALITY);
+    
 
+    BufferedImage img = null;
+    try {
+      img = ImageIO.read(new File("background.png"));
+    } catch (IOException e) {}
+    Image nImg = img.getScaledInstance(1200, 1200, Image.SCALE_DEFAULT);
+    g.drawImage(nImg, (int)getX(), (int)getY(), null);
     // Here is the code for our ball.
     for(int i = 0; i < fishes.size(); i++){
       fishes.get(i).paint(g2);

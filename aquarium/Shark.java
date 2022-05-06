@@ -1,12 +1,19 @@
 import java.util.Random;
+import java.awt.geom.*;
+import java.awt.*;
+import javax.swing.*;
+import javax.imageio.*;
+import java.awt.image.*;
+import java.io.*;
 
 public class Shark extends Fish {
     private Random rand;
+    private int width = 180;
     public Shark(double x, double y, Random r){
         super(x, y, r);
-        changeSpeed(10);
-        changeRadius(100);
         rand = r;
+        this.changeRadius(12.5);
+        this.setGoal(rand.nextInt(1040), rand.nextInt(1240));
     }
     public void step() {
         double goaly = getGoalY();
@@ -24,14 +31,27 @@ public class Shark extends Fish {
         }
         this.setPlace(x, y);
         if(ifStops(goaly, goalx, x, y)){
-            goalx = rand.nextInt(1200);
-            goaly = rand.nextInt(1200);
+            goalx = rand.nextInt(1040);
+            goaly = rand.nextInt(1040);
             this.setGoal(goalx, goaly);
+            if((goalx < getX()) && (width > 0)){
+                width = width * -1;
+            }
+            if((goalx > getX()) && (width < 0)){
+                width = width * -1;
+            }
         }
-      }
+    }
     private boolean ifStops(double goaly, double goalx, double x, double y) {
-        return (x == 0) || (y == 0) || (x == 1200) || (y == 1200) 
+        return (x == 160) || (y == 160) || (x == 1040) || (y == 1040) 
         || (x == goalx) || (y == goaly);
     }
 
+    public void paint(Graphics2D g) {
+        BufferedImage img = null;
+        try {
+        img = ImageIO.read(new File("shark.png"));
+        } catch (IOException e) {}
+        g.drawImage(img, (int)getX(), (int)getY(), width, 160, null);
+    }
 }

@@ -1,12 +1,18 @@
 import java.util.Random;
+import java.awt.geom.*;
+import java.awt.*;
+import javax.swing.*;
+import javax.imageio.*;
+import java.awt.image.*;
+import java.io.*;
 
 public class Carp extends Fish {
     private Random rand;
+    private int width = 60;
     public Carp(double x, double y, Random r){
         super(x, y, r);
         rand = r;
-        this.changeSpeed(12.5);
-        this.changeRadius(2.5);
+        this.changeRadius(12.5);
     }
     public void step() {
         double goaly = getGoalY();
@@ -27,10 +33,24 @@ public class Carp extends Fish {
             goalx = rand.nextInt(1200);
             goaly = rand.nextInt(550);
             this.setGoal(goalx, goaly);
+            if((goalx < getX()) && (width > 0)){
+                width = width * -1;
+            }
+            if((goalx > getX()) && (width < 0)){
+                width = width * -1;
+            }
         }
     }
     private boolean ifStops(double goaly, double goalx, double x, double y) {
         return (x == 0) || (y == 0) || (x == 1200) || (y == 550) 
         || (x == goalx) || (y == goaly);
+    }
+
+    public void paint(Graphics2D g) {
+        BufferedImage img = null;
+        try {
+        img = ImageIO.read(new File("carp.png"));
+        } catch (IOException e) {}
+        g.drawImage(img, (int)getX(), (int)getY(), width, 60, null);
     }
 }

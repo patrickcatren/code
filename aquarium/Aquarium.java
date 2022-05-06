@@ -10,6 +10,7 @@ public class Aquarium extends JFrame{
     f.add(d);
     f.pack();
     f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    f.setTitle("Catren, Patrick -240954");
     f.setVisible(true);
     
     Thread t = new Thread(d);

@@ -9,6 +9,7 @@ public class Plankton extends Fish {
         super(x, 0, r);
         int gy = r.nextInt(1200);
         this.setGoal(x, gy);
+        changeRadius(4);
     }
     public void changeGoal(){}
 }
