@@ -8,14 +8,18 @@ public abstract class Fish implements MouseListener {
     private double goalx, goaly;
     private double x, y, r, delta;
     private Random rand;
+    private boolean paused;
   
-    public Fish(double x, double y, Random ra) {
+    public Fish(double x, double y, Random ra, boolean p) {
       this.x = x;
       this.y = y;
       r = 8;
       rand = ra;
       delta = 3;
+      paused = p;
     }
+
+    public abstract void changeHealth(double a);
   
     public void changeRadius(double rad){
       r = rad;
@@ -73,12 +77,25 @@ public abstract class Fish implements MouseListener {
       g.fill(new Ellipse2D.Double(x - r, y - r, 2 * r, 2 * r));
     }
   
-    public void mouseClicked(MouseEvent e) {
-      setGoal(e.getX(), e.getY());
+    public abstract int getType();
+    public abstract void age();
+    public abstract int getHealth();
+    public abstract void addHealth(int a);
+    public abstract double getMetabolism();
+
+    public boolean isPaused(){
+      return paused;
     }
-  
+
+    public void setPaused(boolean p){
+      paused = p;
+    }
+    public abstract boolean getDisplayed();
+    public abstract void changeDisplayed();
+    public abstract Rectangle2D getBox();
     public void mouseEntered(MouseEvent e)  {}
     public void mouseExited(MouseEvent e)   {}
     public void mousePressed(MouseEvent e)  {}
     public void mouseReleased(MouseEvent e) {}
+
 }
