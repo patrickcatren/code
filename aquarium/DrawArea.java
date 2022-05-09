@@ -5,12 +5,18 @@ import java.util.*;
 import javax.imageio.*;
 import java.awt.image.*;
 import java.io.*;
-
+/**
+ * This class creates the DrawArea, and contains the necessary methods for it to render fish and alter their details.
+ * @author Patrick Catren
+ */
 public class DrawArea extends JComponent implements Runnable {
   private Random rand = new Random(System.currentTimeMillis());
   private ArrayList<Fish> fishes = new ArrayList<Fish>();
   private boolean paused = false;
   private Fish displayedFish = null;
+  /**
+   * The contructor for the DrawArea.
+   */
   public DrawArea() {
     super();
     setPreferredSize(new Dimension(1200, 1200));
@@ -20,29 +26,49 @@ public class DrawArea extends JComponent implements Runnable {
     addBass(0);
   }
 
+  
+  /** 
+   * @param speed Set the speed for all fish in the DrawArea.
+   */
   public void setSpeed(double speed){
     for(int i = 0; i < fishes.size(); i++){
       fishes.get(i).changeSpeed(speed);
     }
   }
+  
+  /** 
+   * @param size The number of plankton to add.
+   */
   public void addPlankton(int size){
     for(int i = 0; i < size; i++){
       Plankton a = new Plankton(rand.nextInt(1200), 0, rand, paused);
       fishes.add(a);
     }
   }
+  
+  /** 
+   * @param size The number of sharks to add to the drawArea.
+   */
   public void addShark(int size){
     for(int i = 0; i < size; i++){
       Shark a = new Shark(0, rand.nextInt(1200), rand, paused);
       fishes.add(a);
     }
   }
+  
+  /** 
+   * @param size The number of bass to add to the draw area.
+   */
   public void addBass(int size){
     for(int i = 0; i < size; i++){
       Bass a = new Bass(0, rand.nextInt(700) + 500, rand, paused);
       fishes.add(a);
     }
   }
+  
+  /** 
+   * @param size The number of carps to add to the draw area.
+   */
   public void addCarp(int size){
     for(int i = 0; i < size; i++){
       Carp a = new Carp(0, rand.nextInt(550), rand, paused);
@@ -50,6 +76,10 @@ public class DrawArea extends JComponent implements Runnable {
     }
   }
 
+  
+  /** 
+   * @param a The speed to be set for every instance of shark in the draw area.
+   */
   public void sharkSpeed(double a){
     for(int i = 0; i < fishes.size(); i++){
       if(fishes.get(i).getType() == 3){
@@ -57,6 +87,10 @@ public class DrawArea extends JComponent implements Runnable {
       }
     }
   }
+  
+  /** 
+   * @param a The health to be set for every instance of shark in the draw area.
+   */
   public void sharkHealth(double a){
     for(int i = 0; i < fishes.size(); i++){
       if(fishes.get(i).getType() == 3){
@@ -64,6 +98,10 @@ public class DrawArea extends JComponent implements Runnable {
       }
     }
   }
+  
+  /** 
+   * @param a The speed to be set for every instance of a carp in the draw area.
+   */
   public void carpSpeed(double a){
     for(int i = 0; i < fishes.size(); i++){
       if(fishes.get(i).getType() == 1){
@@ -71,6 +109,10 @@ public class DrawArea extends JComponent implements Runnable {
       }
     }
   }
+  
+  /** 
+   * @param a The health to be set for every instance of carp in the draw area.
+   */
   public void carpHealth(double a){
     for(int i = 0; i < fishes.size(); i++){
       if(fishes.get(i).getType() == 1){
@@ -78,6 +120,10 @@ public class DrawArea extends JComponent implements Runnable {
       }
     }
   }
+  
+  /** 
+   * @param a The speed to be set for every instance of bass in the draw area.
+   */
   public void bassSpeed(double a){
     for(int i = 0; i < fishes.size(); i++){
       if(fishes.get(i).getType() == 2){
@@ -85,6 +131,10 @@ public class DrawArea extends JComponent implements Runnable {
       }
     }
   }
+  
+  /** 
+   * @param a The health to be set for every instance of shark in the draw area.
+   */
   public void bassHealth(double a){
     for(int i = 0; i < fishes.size(); i++){
       if(fishes.get(i).getType() == 2){
@@ -92,6 +142,10 @@ public class DrawArea extends JComponent implements Runnable {
       }
     }
   }
+
+  /**
+   * The method that is called to move every fish, age them, and allow them to eat each other.
+   */
   public void step() {
     for(int i = 0; i < fishes.size(); i++){
       addMouseListener(fishes.get(i));
@@ -159,6 +213,9 @@ public class DrawArea extends JComponent implements Runnable {
     }
   }
 
+  /**
+   * Controls the thread and runs step every twenty milliseconds.
+   */
   public void run() {
     while( true ) {
       try {
@@ -169,10 +226,18 @@ public class DrawArea extends JComponent implements Runnable {
     }
   }
 
+  
+  /** 
+   * @param p The pause status tpo be set for the draw area.
+   */
   public void setDAPause(boolean p){
     paused = p;
   }
 
+  
+  /** 
+   * @param g Renders the graphics of the draw area, and sets the background image.
+   */
   protected void paintComponent(Graphics g) {
     super.paintComponent(g);
     Graphics2D g2 = (Graphics2D)g;

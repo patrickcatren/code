@@ -2,6 +2,10 @@ import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
 
+/**
+ * The aquarium extends JFrame to create the window that displays the fish and controls to modify them.
+ * @author Patrick Catren
+ */
 public class Aquarium extends JFrame{
 
   private static String[] A = {"plankton", "carp", "bass", "shark"};
@@ -23,7 +27,11 @@ public class Aquarium extends JFrame{
   private static JLabel metabolismLabel = new JLabel("Metabolism: ");
   private static JComboBox speciesOptions = new JComboBox<String>(B);
   private static JTextField entryPoint = new JTextField(10);
+  private static JLabel entryLabel = new JLabel("0-15");
 
+   /**
+    * An implementation of action listener that looks for which fish to add.
+    */
   class CustomActionListener implements ActionListener {
     public void actionPerformed(ActionEvent e) {
       whatToAdd = (String) selectFishType.getSelectedItem();
@@ -47,6 +55,9 @@ public class Aquarium extends JFrame{
       
     }
   }
+  /**
+   * An implementation of action listener that checks the pause button.
+   */
   class CustomActionListener2 implements ActionListener {
     public void actionPerformed(ActionEvent e) {
       if(paused){
@@ -59,6 +70,9 @@ public class Aquarium extends JFrame{
       }
     }
   }
+  /**
+   * An implemtation of action listener used for changing fish options.
+   */
   class CustomActionListener3 implements ActionListener {
     public void actionPerformed(ActionEvent e) {
       if(speciesOptions.getSelectedItem().equals(B[0])){
@@ -79,18 +93,47 @@ public class Aquarium extends JFrame{
       if(speciesOptions.getSelectedItem().equals(B[5])){
         d.sharkHealth(Double.parseDouble(entryPoint.getText()));
       }
-
+    }
+  }
+  /**
+   * An implemntation of action listener that adjusts the range displayed for acceptable values to set.
+   */
+  class CustomActionListener4 implements ActionListener {
+    public void actionPerformed(ActionEvent e) {
+      if(speciesOptions.getSelectedItem().equals(B[0])){
+        entryLabel.setText("0-15");
+      }
+      if(speciesOptions.getSelectedItem().equals(B[1])){
+        entryLabel.setText("0-20,000");
+      }
+      if(speciesOptions.getSelectedItem().equals(B[2])){
+        entryLabel.setText("0-15");
+      }
+      if(speciesOptions.getSelectedItem().equals(B[3])){
+        entryLabel.setText("0-20,000");
+      }
+      if(speciesOptions.getSelectedItem().equals(B[4])){
+        entryLabel.setText("0-15");
+      }
+      if(speciesOptions.getSelectedItem().equals(B[5])){
+        entryLabel.setText("0-20,000");
+      }
     }
   }
 
+  /**
+   * The constructor for aquarium.
+   */
   public Aquarium(){
     ActionListener aList = new CustomActionListener();
     ActionListener bList = new CustomActionListener2();
     ActionListener cList = new CustomActionListener3();
+    ActionListener dList = new CustomActionListener4();
 
     addFishButton.addActionListener(aList);
     pauseButton.addActionListener(bList);
     entryPoint.addActionListener(cList);
+    speciesOptions.addActionListener(dList);
     f.add(a, BorderLayout.SOUTH);
     a.add(selectFishType, BorderLayout.CENTER);
     a.add(addFishButton, BorderLayout.CENTER);
@@ -103,6 +146,7 @@ public class Aquarium extends JFrame{
     a.add(metabolism, BorderLayout.CENTER);
     a.add(speciesOptions, BorderLayout.CENTER);
     a.add(entryPoint, BorderLayout.CENTER);
+    a.add(entryLabel, BorderLayout.CENTER);
     f.add(d, BorderLayout.CENTER);
     f.pack();
     f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -112,18 +156,35 @@ public class Aquarium extends JFrame{
     Thread t = new Thread(d);
     t.start();
   }
+  
+  /** 
+   * @param args Takes no arguments.
+   */
   public static void main(String[] args) {
     Aquarium aqua = new Aquarium();
     aqua.setVisible(true);
   }
+  
+  /** 
+   * @param a The fish to be displayed.
+   * @return Fish returns the fish.
+   */
   public static Fish getFishDisplayed(Fish a){
     return a;
   }
+  
+  /** 
+   * @param a The fish to be displayed.
+   */
   public static void setFishDisplayed(Fish a){
     speed.setText(String.valueOf(a.getSpeed()));
     health.setText(String.valueOf(a.getHealth()));
     metabolism.setText(String.valueOf(a.getMetabolism()));
   }
+  
+  /** 
+   * @return boolean The aquarium's paused value.
+   */
   public boolean getPaused(){
     return paused;
   }
